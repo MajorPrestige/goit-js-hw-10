@@ -12,7 +12,7 @@ const divEl = document.querySelector('div');
 
 inputEl.addEventListener('input', () => {
   let inputCountry = inputEl.value;
-  debounce(fetchCountries(inputCountry), DEBOUNCE_DELAY);
+  fetchCountries(inputCountry);
 });
 
 function fetchCountries(countryName) {
@@ -22,13 +22,7 @@ function fetchCountries(countryName) {
     .then(response => {
       return response.json();
     })
-    .then(result => {
-      if (result.length > 10) {
-        return console.log(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      }
-    })
+    .then(resultMarkup)
     .catch(err => {
       console.log(err);
     });
@@ -37,6 +31,7 @@ function fetchCountries(countryName) {
 function renderCountryCard(country) {
   console.log(country);
   const markup = countryInfo(country[0]);
+  listEl.innerHTML = '';
   divEl.innerHTML = markup;
 }
 
@@ -44,7 +39,45 @@ function renderCountryList(country) {
   console.log(country);
   const markup = countryList(country);
   listEl.innerHTML = markup;
+  divEl.innerHTML = '';
 }
+
+function resultMarkup(result) {
+  if (result.length > 10) {
+    return console.log(
+      'Too many matches found. Please enter a more specific name.'
+    );
+  } else if (result.length >= 2 && result.length <= 10) {
+    return renderCountryList(result);
+  } else if (result.length === 1) {
+    return renderCountryCard(result);
+  } else {
+    listEl.innerHTML = '';
+    divEl.innerHTML = '';
+  }
+}
+
+// function renderCountryCard(country) {
+//   console.log(country);
+//   const markup = countryInfo(country[0]);
+//   divEl.innerHTML = markup;
+// }
+
+// function renderCountryList(country) {
+//   console.log(country);
+//   const markup = countryList(country);
+//   listEl.innerHTML = markup;
+// }
+
+// function resultMarkup(result) {
+//   if (result.length > 10) {
+//     console.log('Too many matches found. Please enter a more specific name.');
+//   } else if (result.length >= 2 && result.length <= 10) {
+//     renderCountryList();
+//   } else {
+//     renderCountryCard();
+//   }
+// }
 
 // fetchCountries('ukraine')
 //   .then(renderCountryCard)
