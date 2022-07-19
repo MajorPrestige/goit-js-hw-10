@@ -4,6 +4,5 @@
 </div>
 <p>Capital: {{this.capital}}</p>
 <p>Population: {{this.population}}</p>
-{{#each languages}}
-<p>Languages: {{this}}</p>
-{{/each}}
+<p>Languages: {{#each languages}}{{#if @index includeZero=false}}, {{/if}}{{this}}
+{{/each}}</p>
