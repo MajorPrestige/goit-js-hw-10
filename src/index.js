@@ -30,18 +30,6 @@ function inputHandler() {
     });
 }
 
-function renderCountryCard(country) {
-  const markup = countryInfo(country[0]);
-  listEl.innerHTML = '';
-  divEl.innerHTML = markup;
-}
-
-function renderCountryList(country) {
-  const markup = countryList(country);
-  listEl.innerHTML = markup;
-  divEl.innerHTML = '';
-}
-
 function resultMarkup(result) {
   if (result.length > 10) {
     return Notify.warning(
@@ -52,4 +40,16 @@ function resultMarkup(result) {
   } else if (result.length === 1) {
     return renderCountryCard(result);
   }
+}
+
+function renderCountryCard(country) {
+  const markup = countryInfo(country[0]);
+  listEl.innerHTML = '';
+  divEl.innerHTML = markup;
+}
+
+function renderCountryList(country) {
+  const markup = countryList(country);
+  listEl.innerHTML = markup;
+  divEl.innerHTML = '';
 }
